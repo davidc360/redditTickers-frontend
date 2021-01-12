@@ -86,9 +86,9 @@ function TicksFromSub({ subreddit }) {
     if (data) {
         const date_from_data = data['last_updated'].slice(0, 10).split('-')
         const time_from_data = data['last_updated'].slice(-8).split(':')
-        newTime = new Date(...date_from_data, ...time_from_data)
+        newTime = new Date(Date.UTC(...date_from_data, ...time_from_data))
 
-        const LUTDate = `${newTime.getUTCFullYear()}-${newTime.getUTCMonth() + 1}-${newTime.getUTCDate()}`
+        const LUTDate = `${newTime.getUTCFullYear()}-${newTime.getUTCMonth()}-${newTime.getUTCDate()}`
         const LUTHour = newTime.getHours() > 12 ? newTime.getHours()-12 : newTime.getHours()
         const LUTMinute = newTime.getMinutes() > 10 ? newTime.getMinutes() : '0' + newTime.getMinutes()
         LUTTime = LUTHour + ':' + LUTMinute
