@@ -72,8 +72,8 @@ function TicksFromSub({ subreddit }) {
                 <th>Positive Strength</th>
                 <th>Negative Strength</th>
                 <th>% positive</th>
-                <th>% Negative</th>
                 <th>% Neutral</th>
+                <th>% Negative</th>
             </tr>
             </thead>
             <tbody>{tickerRows}</tbody>
@@ -116,17 +116,19 @@ function TicksFromSub({ subreddit }) {
 }
 
 function TickerRow({ ticker, count, pos_sent, pos_sent_cnt=0, neg_sent, neg_sent_cnt=0, neut_sent_cnt=0}) {
-    let total_sent_cnt = pos_sent_cnt + neg_sent_cnt + neut_sent_cnt    
+    let total_sent_cnt = pos_sent_cnt + neg_sent_cnt + neut_sent_cnt
+    const pos_strength = pos_sent && (pos_sent*100).toFixed(0)
+    const neg_strength = neg_sent && (neg_sent*100).toFixed(0)
 
-    const sent_percent = sent_cnt => sent_cnt ? (sent_cnt/total_sent_cnt*100).toFixed(2) + '%' : null
+    const sent_percent = sent_cnt => sent_cnt ? (sent_cnt/total_sent_cnt*100).toFixed(2)+'%' : '0%'
     return (
         <tr>
             <td className={styles.left}>{ticker}</td>
             <td>{count}</td>
-            <td>{pos_sent && (pos_sent*100).toFixed(0)}</td>
-            <td>{neg_sent && (neg_sent*100).toFixed(0)}</td>
-            <td>{sent_percent(neut_sent_cnt)}</td>
+            <td>{pos_strength || 0}</td>
+            <td>{neg_strength || 0}</td>
             <td>{sent_percent(pos_sent_cnt)}</td>
+            <td>{sent_percent(neut_sent_cnt)}</td>
             <td>{sent_percent(neg_sent_cnt)}</td>
         </tr>
     )
