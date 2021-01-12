@@ -32,20 +32,23 @@ function TicksFromSub({ subreddit }) {
         console.log(data['tickers'])
         let keys = Object.keys(data.tickers)
         // sort the tickers by mention count
-        keys.sort((a, b) => data.tickers[a] - data.tickers[b] )
+        keys.sort((a, b) => data.tickers[b].count - data.tickers[a].count )
         
         for (const key of keys) {
             tickerRows.push(
-                <TickerRow {...data.tickers[key]} ticker={key}/>
+                <TickerRow {...data.tickers[key]} ticker={key} key={key}/>
             )
         }
     }
     
     return (
         <div className={styles.ctn}>
-            <div>
-                <h1 className={styles.subName}>r/{subreddit}</h1>
-                <p>{data && data.lastUpdated && 'last updated: ' + data.lastUpdated}</p>
+            <div className={styles.title}>
+                <h1 className={styles.sub}>r/{subreddit}</h1>
+                <div className={styles.lastUpdated}>
+                    <p>Last updated:</p>
+                    <p>{data && data['last_updated']}</p>
+                </div>
             </div>
             <table className={styles.table}>
                 <thead>
@@ -65,22 +68,17 @@ function TicksFromSub({ subreddit }) {
     )
 }
 
-function TickerRow({ ticker, count, pos_sent, pos_sent_cnt, neg_sent, neg_sent_cnt, neut_sent_cnt}) {
-    let total_sent_cnt = 0
-    if (pos_sent_cnt)
-        total_sent_cnt += pos_sent_cnt    
-    if (neg_sent_cnt)
-        total_sent_cnt += neg_sent_cnt    
-    if (neut_sent_cnt)
-        total_sent_cnt += neut_sent_cnt    
+function TickerRow({ ticker, count, pos_sent, pos_sent_cnt=0, neg_sent, neg_sent_cnt=0, neut_sent_cnt=0}) {
+    let total_sent_cnt = pos_sent_cnt + neg_sent_cnt + neut_sent_cnt    
+
     const sent_percent = sent_cnt => sent_cnt ? (sent_cnt/total_sent_cnt*100).toFixed(2) + '%' : null
     return (
         <tr>
             <td className={styles.left}>{ticker}</td>
             <td>{count}</td>
-            <td>{pos_sent}</td>
+            <td>{pos_sent && (pos_sent*100).toFixed(0)}</td>
             <td>{sent_percent(pos_sent_cnt)}</td>
-            <td>{neg_sent}</td>
+            <td>{neg_sent && (neg_sent*100).toFixed(0)}</td>
             <td>{sent_percent(neg_sent_cnt)}</td>
             <td>{sent_percent(neut_sent_cnt)}</td>
         </tr>
