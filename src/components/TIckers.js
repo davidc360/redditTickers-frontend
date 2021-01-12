@@ -70,8 +70,8 @@ function TicksFromSub({ subreddit }) {
                 <th className={styles.left}>Ticker</th>
                 <th>Mentions</th>
                 <th>Positive Strength</th>
-                <th>% positive</th>
                 <th>Negative Strength</th>
+                <th>% positive</th>
                 <th>% Negative</th>
                 <th>% Neutral</th>
             </tr>
@@ -112,10 +112,10 @@ function TickerRow({ ticker, count, pos_sent, pos_sent_cnt=0, neg_sent, neg_sent
             <td className={styles.left}>{ticker}</td>
             <td>{count}</td>
             <td>{pos_sent && (pos_sent*100).toFixed(0)}</td>
-            <td>{sent_percent(pos_sent_cnt)}</td>
             <td>{neg_sent && (neg_sent*100).toFixed(0)}</td>
-            <td>{sent_percent(neg_sent_cnt)}</td>
             <td>{sent_percent(neut_sent_cnt)}</td>
+            <td>{sent_percent(pos_sent_cnt)}</td>
+            <td>{sent_percent(neg_sent_cnt)}</td>
         </tr>
     )
 }
