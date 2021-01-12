@@ -3,7 +3,7 @@ import './App.css';
 
 import Nav from './components/Nav'
 import About from './components/About'
-import Home from './components/Home'
+import Home from './components/TIckers'
 import Contact from './components/Contact'
 
 import { BrowserRouter, Route, Switch, useParams } from 'react-router-dom'
