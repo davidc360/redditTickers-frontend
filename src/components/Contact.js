@@ -12,7 +12,7 @@ export default function () {
             </div>
             <br/>
             <div className='contact-comment'>
-                <textarea className='contact-text-area' name="" id="" cols="30" rows="10"></textarea>
+                <textarea className='contact-text-area' name="" id="" cols="30" rows="10" value="Not yet implemented." readOnly></textarea>
                 <br/>
                 <div className='submit'>
                     Submit
