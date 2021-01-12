@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import styles from "./Tickers.module.sass"
+import './icons.css'
 
 import axios from 'axios'
 
@@ -55,30 +56,49 @@ function TicksFromSub({ subreddit }) {
             )
         }
     }
-    
+
+    const loaded = data ? true : false
+    const dataIsEmpty = !data || Object.keys(data.tickers).length == 0    
+
+    const noTickers = (
+        <div>Didn't find enough stocks being discussed.</div>
+    )
+    const tickerTable = (
+        <table className={styles.table}>
+            <thead>
+            <tr>
+                <th className={styles.left}>Ticker</th>
+                <th>Mentions</th>
+                <th>Positive Strength</th>
+                <th>% positive</th>
+                <th>Negative Strength</th>
+                <th>% Negative</th>
+                <th>% Neutral</th>
+            </tr>
+            </thead>
+            <tbody>{tickerRows}</tbody>
+        </table>
+    )
+    const main_section = (
+        <>
+        <div className={styles.title}>
+            <h1 className={styles.sub}>r/{subreddit}</h1>
+            <div className={styles.lastUpdated}>
+                <p>Last updated:</p>
+                <p>{data && data['last_updated']}</p>
+            </div>
+        </div>
+        { dataIsEmpty ? noTickers : tickerTable } 
+        </>
+    )
+    const loader = (
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    )
+
+        
     return (
         <div className={styles.ctn}>
-            <div className={styles.title}>
-                <h1 className={styles.sub}>r/{subreddit}</h1>
-                <div className={styles.lastUpdated}>
-                    <p>Last updated:</p>
-                    <p>{data && data['last_updated']}</p>
-                </div>
-            </div>
-            <table className={styles.table}>
-                <thead>
-                <tr>
-                    <th className={styles.left}>Ticker</th>
-                    <th>Mentions</th>
-                    <th>Positive Strength</th>
-                    <th>% positive</th>
-                    <th>Negative Strength</th>
-                    <th>% Negative</th>
-                    <th>% Neutral</th>
-                </tr>
-                </thead>
-                <tbody>{tickerRows}</tbody>
-            </table>
+            { loaded ? main_section : loader }
         </div>
     )
 }
