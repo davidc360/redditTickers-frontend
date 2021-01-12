@@ -80,15 +80,18 @@ function TicksFromSub({ subreddit }) {
         </table>
     )
     // last updated time
+    let newTime
     let LUTTime
-    const LUT = data && new Date(data['last_updated'] + ' UTC')
+    if (data) {
+        const date_from_data = data['last_updated'].slice(0, 10).split('-')
+        const time_from_data = data['last_updated'].slice(-8).split(':')
+        newTime = new Date(...date_from_data, ...time_from_data)
 
-    if (LUT) {
-        const LUTDate = `${LUT.getUTCFullYear()}-${LUT.getUTCMonth() + 1}-${LUT.getUTCDate()}`
-        const LUTHour = LUT.getHours() > 12 ? LUT.getHours()-12 : LUT.getHours()
-        const LUTMinute = LUT.getMinutes() > 10 ? LUT.getMinutes() : '0' + LUT.getMinutes()
+        const LUTDate = `${newTime.getUTCFullYear()}-${newTime.getUTCMonth() + 1}-${newTime.getUTCDate()}`
+        const LUTHour = newTime.getHours() > 12 ? newTime.getHours()-12 : newTime.getHours()
+        const LUTMinute = newTime.getMinutes() > 10 ? newTime.getMinutes() : '0' + newTime.getMinutes()
         LUTTime = LUTHour + ':' + LUTMinute
-        LUTTime = LUT.getHours() > 12 ? LUTTime+'PM' : LUTTime+'AM'
+        LUTTime = newTime.getHours() > 12 ? LUTTime+'PM' : LUTTime+'AM'
         LUTTime = LUTDate+' '+LUTTime
     }
     const main_section = (
@@ -104,7 +107,7 @@ function TicksFromSub({ subreddit }) {
         </>
     )
     const loader = (
-        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
     )
 
         
