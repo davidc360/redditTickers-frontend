@@ -79,13 +79,25 @@ function TicksFromSub({ subreddit }) {
             <tbody>{tickerRows}</tbody>
         </table>
     )
+    // last updated time
+    let LUTTime
+    const LUT = data && new Date(data['last_updated'] + ' UTC')
+
+    if (LUT) {
+        const LUTDate = `${LUT.getUTCFullYear()}-${LUT.getUTCMonth() + 1}-${LUT.getUTCDate()}`
+        const LUTHour = LUT.getHours() > 12 ? LUT.getHours()-12 : LUT.getHours()
+        const LUTMinute = LUT.getMinutes() > 10 ? LUT.getMinutes() : '0' + LUT.getMinutes()
+        LUTTime = LUTHour + ':' + LUTMinute
+        LUTTime = LUT.getHours() > 12 ? LUTTime+'PM' : LUTTime+'AM'
+        LUTTime = LUTDate+' '+LUTTime
+    }
     const main_section = (
         <>
         <div className={styles.title}>
             <h1 className={styles.sub}>r/{subreddit}</h1>
             <div className={styles.lastUpdated}>
                 <p>Last updated:</p>
-                <p>{data && data['last_updated']}</p>
+                <p>{LUTTime}</p>
             </div>
         </div>
         { dataIsEmpty ? noTickers : tickerTable } 
