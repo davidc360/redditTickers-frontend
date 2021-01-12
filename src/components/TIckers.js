@@ -3,10 +3,23 @@ import styles from "./Tickers.module.sass"
 
 import axios from 'axios'
 
+const subreddits = [
+    'wallstreetbets',
+    'stocks',
+    'stockmarket',
+    'spacs',
+    'investing',
+    'options',
+    'robinhood',
+    'stock_picks'
+]
+
 export default function () {
     return (
         <div>
-            <TicksFromSub subreddit='wallstreetbets'/>
+            {
+                subreddits.map(sub => <TicksFromSub subreddit={sub}/>)
+            }
         </div>
     )
 }
@@ -31,6 +44,8 @@ function TicksFromSub({ subreddit }) {
     if (data) {
         console.log(data['tickers'])
         let keys = Object.keys(data.tickers)
+        // limit to 20 tickers
+        keys = keys.slice(0, 20)
         // sort the tickers by mention count
         keys.sort((a, b) => data.tickers[b].count - data.tickers[a].count )
         
