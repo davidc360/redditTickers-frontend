@@ -1,0 +1,1 @@
+#simple website that allows you to look up all news articles relating to a company or any keyword.
