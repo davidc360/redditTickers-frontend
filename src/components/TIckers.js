@@ -10,6 +10,7 @@ const subreddits = [
     'stockmarket',
     'spacs',
     'investing',
+    'pennystocks',
     'options',
     'robinhood',
     'stock_picks'
@@ -123,7 +124,7 @@ function TickerRow({ ticker, count, pos_sent, pos_sent_cnt=0, neg_sent, neg_sent
     const pos_strength = pos_sent && (pos_sent*100).toFixed(0)
     const neg_strength = neg_sent && (neg_sent*100).toFixed(0)
 
-    const sent_percent = sent_cnt => sent_cnt ? (sent_cnt/total_sent_cnt*100).toFixed(2)+'%' : '0%'
+    const sent_percent = sent_cnt => sent_cnt > 0 ? (sent_cnt/total_sent_cnt*100).toFixed(2)+'%' : null
     return (
         <tr>
             <td className={styles.left}>{ticker}</td>
