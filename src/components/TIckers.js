@@ -108,7 +108,10 @@ function TicksFromSub({ subreddit }) {
         </>
     )
     const loader = (
+        <>
+        <div class={styles.left}>{'loading data from r/' + subreddit}</div>
         <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        </>
     )
 
         
