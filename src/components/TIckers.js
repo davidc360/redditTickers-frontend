@@ -6,11 +6,10 @@ import axios from 'axios'
 
 const subreddits = [
     'wallstreetbets',
-    'stocks',
-    'stockmarket',
-    'spacs',
     'investing',
     'pennystocks',
+    'stocks',
+    'spacs',
     'options',
     'robinhood',
     'stock_picks'
